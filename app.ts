@@ -17,7 +17,7 @@ const bcrypt = require("bcryptjs");
 
 const mysqlStore = require('express-mysql-session')(session);
 
-const PORT = 3000
+const PORT = 3001
 
 const sessionStore = new mysqlStore({
     connectionLimit: 10,
@@ -107,9 +107,6 @@ const start = async () => {
     }
 
     const admin = new AdminJS(adminOptions)
-
-    // const adminRouter = AdminJSExpress.buildRouter(admin)
-   
     const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
         admin, 
         {
@@ -136,7 +133,7 @@ const start = async () => {
     app.use(admin.options.rootPath, adminRouter)
 
     app.get('/', (req, res) => {
-        res.send('Olá mundo')
+        res.send('Api is runnning')
     })
     app.listen(PORT, () => {
         console.log(`AdminJS started on http://localhost:${PORT}${admin.options.rootPath}`)
