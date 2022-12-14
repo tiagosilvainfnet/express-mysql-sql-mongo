@@ -13,6 +13,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link, useNavigate   } from 'react-router-dom';
 
+import logo from '../../assets/img/logo.png';
+
 const styleImg = {
   height: '60px'
 }
@@ -60,7 +62,7 @@ function AppBarCustom() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
-            <img style={styleImg} src="https://assets.stickpng.com/images/61447cbd5953a50004ee16d8.png"/>
+            <img style={styleImg} src={logo}/>
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton

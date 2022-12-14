@@ -8,8 +8,16 @@ import express from 'express';
 import { Role } from './models/role.entity';
 import { User } from './models/user.entity';
 import { Document } from './models/document.entity';
+
+// Controllers
 import UserController from './controllers/UserController';
+
+// Routes
+import document from './routes/document';
+import auth from './routes/auth';
+
 import session from 'express-session';
+import cors from 'cors';
 
 require('dotenv').config()
 
@@ -130,7 +138,12 @@ const start = async () => {
             name: 'adminjs-internal-admin'
         }
     )
+    app.use(cors());
+    app.use(express.json());
+
     app.use(admin.options.rootPath, adminRouter)
+    app.use('/document', document)
+    app.use('/auth', auth)
 
     app.get('/', (req, res) => {
         res.send('Api is runnning')
