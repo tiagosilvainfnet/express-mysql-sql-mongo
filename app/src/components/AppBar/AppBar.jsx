@@ -108,7 +108,7 @@ function AppBarCustom() {
             </Menu>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none', flexGrow: 1 }, mr: 1 }}>
-              <img style={styleImg} src="https://assets.stickpng.com/images/61447cbd5953a50004ee16d8.png"/>
+              <img style={styleImg} src={logo}/>
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
