@@ -7,6 +7,23 @@ class DocumentController extends GenericController{
         super();
     }
 
+    async updateDocument(_id: string, data: any){
+        console.log(data)
+        await Document.findByIdAndUpdate(_id, data);
+        return {
+            status: 200
+        }
+    }
+
+    async getDocument(_id: string){
+        const document = await Document.findById(_id);
+
+        return {
+            document,
+            status: 200
+        }
+    }
+
     async getDocuments(query: any){
         let { user_id, page, limit } = query;
 

@@ -1,5 +1,6 @@
 import { Grid, IconButton, Pagination, Stack, Select,MenuItem, FormControl, InputLabel   } from '@mui/material';
 import {
+    useNavigate,
     useLocation 
 } from 'react-router-dom';
 import ListViewer from '../components/ListViewer/ListViewer';
@@ -10,6 +11,8 @@ import { useState } from 'react';
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
 const Documents = ({ setCurrentRoute }) => {
+    const navigate = useNavigate();
+
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
     const user = {
@@ -21,11 +24,8 @@ const Documents = ({ setCurrentRoute }) => {
     const location = useLocation();
     setCurrentRoute(location.pathname);
 
-    const editDocument = (id) => {
-        alert(`Editando documento ${id}`)
-    }
     const deleteDocument = (id) => {
-        alert(`Deletando documento ${id}`)
+        alert(`Editando documento ${id}`)
     }
 
     const columns = [
@@ -36,7 +36,7 @@ const Documents = ({ setCurrentRoute }) => {
         { headerName: 'Data', key: 'updatedAt', id: false  },
         { headerName: 'Ações', action: (params) => {
             return <>
-                        <IconButton onClick={() => editDocument(params._id) } color="success" aria-label="upload picture" component="label">
+                        <IconButton onClick={() => navigate(`/document/${params._id}`) } color="success" aria-label="upload picture" component="label">
                             <Edit />
                         </IconButton>
                         <IconButton onClick={() => deleteDocument(params._id) } color="error" aria-label="upload picture" component="label">

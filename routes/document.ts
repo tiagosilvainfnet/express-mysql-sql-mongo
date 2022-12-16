@@ -10,12 +10,21 @@ document.get('/', async (req, res) => {
     res.json(result);
 })
 
+document.get('/:id', async (req, res) => {
+    const result = await documentCtrl.getDocument(req.params.id);
+    res.statusCode = result.status;
+    res.json(result);
+})
+
+
 document.post('/', async (req, res) => {
     res.json({})
 })
 
 document.patch('/:id', async (req, res) => {
-    res.json({})
+    const result = await documentCtrl.updateDocument(req.params.id, req.body);
+    res.statusCode = result.status;
+    res.json(result);
 })
 
 export default document;
