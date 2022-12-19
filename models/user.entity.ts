@@ -7,6 +7,7 @@ interface IUser {
     username: string;
     email: string;
     password: string;
+    token: string;
     role_id: number;
     createdAt: Date;
     updatedAt: Date;
@@ -20,6 +21,7 @@ export class User extends Model<IUser, UserCreationAttributes> {
     declare username: string;
     declare email: string;
     declare password: string;
+    declare token: string;
     declare role_id: number;
     declare createdAt: Date;
     declare updatedAt: Date;
@@ -47,6 +49,10 @@ User.init(
         password: {
             type: new DataTypes.STRING(255),
             allowNull: false,
+        },
+        token: {
+            type: new DataTypes.STRING(255),
+            allowNull: true,
         },
         role_id: {
             type: new DataTypes.INTEGER,
