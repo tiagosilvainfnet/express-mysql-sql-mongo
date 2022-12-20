@@ -19,6 +19,9 @@ import auth from './routes/auth';
 import session from 'express-session';
 import cors from 'cors';
 
+import hbs from 'hbs';
+const path = require('node:path');
+
 require('dotenv').config()
 
 const bcrypt = require("bcryptjs");
@@ -36,6 +39,8 @@ const sessionStore = new mysqlStore({
     port: process.env.SQL_DB_PORT,
     createDatabaseTable: true
 });
+
+const ROOT_DIR = __dirname
 
 AdminJS.registerAdapter({
     Resource: AdminSequelize.Resource,
@@ -138,8 +143,12 @@ const start = async () => {
             name: 'adminjs-internal-admin'
         }
     )
+   
+
     app.use(cors());
     app.use(express.json());
+    hbs.registerPartials(path.join(ROOT_DIR, 'views'))
+    app.set('view engine', '.hbs')
 
     app.use(admin.options.rootPath, adminRouter)
     app.use('/document', document)

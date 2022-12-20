@@ -6,7 +6,9 @@ import {
 import ListViewer from '../components/ListViewer/ListViewer';
 import { Edit, Delete } from '@mui/icons-material';
 import useSWR from 'swr'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getUser, userIsLoggedIn } from '../services/auth';
+import axios from 'axios';
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
@@ -15,25 +17,39 @@ const Documents = ({ setCurrentRoute }) => {
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
-    const user = {
-        id: 6
-    }
+    const user = getUser();
 
     const { data, error, isLoading } = useSWR(`http://localhost:3001/document?user_id=${user.id}&page=${page}&limit=${limit}`, fetcher, { refreshInterval: 5000 })
 
     const location = useLocation();
     setCurrentRoute(location.pathname);
 
-    const deleteDocument = (id) => {
-        alert(`Editando documento ${id}`)
+    const deleteDocument = async (id) => {
+        const conf = window.confirm("Tem certeza que deseja deletar?");
+
+        if(conf){
+            try{
+                await axios({
+                    method: "delete",
+                    url: `http://localhost:3001/document/${id}`,
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                alert("Documento deletado com sucesso!!!");
+            }catch(err){
+                alert("Erro ao deletar documento.");
+            }
+        }
     }
+
+    useEffect(() => {
+        userIsLoggedIn(navigate, null);
+    }, []);
 
     const columns = [
         { headerName: 'ID', key: '_id', id: true },
         { headerName: 'Título', key: 'title', id: false },
-        { headerName: 'Conteúdo', key: 'content', id: false },
-        { headerName: 'Data', key: 'createdAt', id: false  },
-        { headerName: 'Data', key: 'updatedAt', id: false  },
+        { headerName: 'Criado em', key: 'createdAt', id: false  },
+        { headerName: 'Editado em', key: 'updatedAt', id: false  },
         { headerName: 'Ações', action: (params) => {
             return <>
                         <IconButton onClick={() => navigate(`/document/${params._id}`) } color="success" aria-label="upload picture" component="label">

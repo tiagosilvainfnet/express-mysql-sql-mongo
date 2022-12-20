@@ -27,4 +27,10 @@ document.patch('/:id', async (req, res) => {
     res.json(result);
 })
 
+document.delete('/:id', async (req, res) => {
+    const result = await documentCtrl.deleteDocument(req.params.id);
+    res.statusCode = result.status;
+    res.json(result);
+})
+
 export default document;

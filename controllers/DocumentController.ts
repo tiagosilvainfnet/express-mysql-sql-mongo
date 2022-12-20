@@ -7,8 +7,14 @@ class DocumentController extends GenericController{
         super();
     }
 
+    async deleteDocument(_id: string){
+        await Document.deleteOne({ _id: _id });
+        return {
+            status: 200
+        }
+    }
+
     async updateDocument(_id: string, data: any){
-        console.log(data)
         await Document.findByIdAndUpdate(_id, data);
         return {
             status: 200

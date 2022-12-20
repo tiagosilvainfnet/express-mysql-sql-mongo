@@ -4,16 +4,20 @@ import {
 import { Stack, Box, Typography, Grid, Button } from '@mui/material';
 import { TextField } from '../components';
 import logo from '../assets/img/logo.png';
-import { useState } from 'react'; 
-import { login } from '../services/auth';
+import { useState, useEffect } from 'react'; 
+import { login, userIsLoggedIn } from '../services/auth';
 
 const Login = ({ setCurrentRoute }) => {
     const navigate = useNavigate();
     const location = useLocation();
     setCurrentRoute(location.pathname);
 
-    const [email, setEmail] = useState("");
+    const [userEmail, setUserEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    useEffect(() => {
+        userIsLoggedIn(navigate, location.pathname);
+    }, []);
 
     return <Grid container spacing={2}>
                 <Grid item xs={0} sm={4}></Grid>
@@ -30,12 +34,12 @@ const Login = ({ setCurrentRoute }) => {
                             <Typography variant="h4" component="h1" gutterBottom>Entrar</Typography>
                         </Box>
                         <TextField
-                            id={'email-login'}
+                            id={'email-user-login'}
                             fullWidth={true}
-                            label={'E-mail'}
-                            type={'email'}
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            label={'E-mail/Username'}
+                            type={'text'}
+                            value={userEmail}
+                            onChange={(e) => setUserEmail(e.target.value)}
                             />
                         <TextField
                             id={'password-login'}
@@ -53,8 +57,14 @@ const Login = ({ setCurrentRoute }) => {
                         <Button
                             size={'large'}
                             variant={'contained'} 
-                            onClick={() => {
-                                login(email, password)
+                            onClick={async () => {
+                                const response = await login(userEmail, password);
+                                if(response.status === 200){
+                                    window.localStorage.setItem('user', JSON.stringify(response.data))
+                                    navigate('/');
+                                }else if(response.status === 404){
+                                    alert(response.data.msg)
+                                }
                             }}>Entrar</Button>
                     </Stack>
                 </Grid>
