@@ -1,10 +1,10 @@
-import { Grid, IconButton, Pagination, Stack, Select,MenuItem, FormControl, InputLabel   } from '@mui/material';
+import { Grid, IconButton, Pagination, Stack, Select,MenuItem, FormControl, InputLabel, Fab    } from '@mui/material';
 import {
     useNavigate,
     useLocation 
 } from 'react-router-dom';
 import ListViewer from '../components/ListViewer/ListViewer';
-import { Edit, Delete } from '@mui/icons-material';
+import { Edit, Delete, Add } from '@mui/icons-material';
 import useSWR from 'swr'
 import { useState, useEffect } from 'react';
 import { getUser, userIsLoggedIn } from '../services/auth';
@@ -124,6 +124,15 @@ const Documents = ({ setCurrentRoute }) => {
                         </Stack>
                     </Grid>
                     <Grid item xs={0} md={1}></Grid>
+                    <Fab 
+                        onClick={() => navigate('/document')}
+                        color="primary" aria-label="add" sx={{
+                        position: 'fixed',
+                        right: 16,
+                        bottom: 16
+                    }}>
+                        <Add />
+                    </Fab>
                 </Grid>
             </>
 }

@@ -14,6 +14,14 @@ class DocumentController extends GenericController{
         }
     }
 
+    async createDocument(data: any){
+        const doc = await Document.create(data);
+        return {
+            status: 200,
+            _id: doc.id
+        }
+    }
+
     async updateDocument(_id: string, data: any){
         await Document.findByIdAndUpdate(_id, data);
         return {

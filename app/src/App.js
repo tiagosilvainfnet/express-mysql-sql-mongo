@@ -29,6 +29,7 @@ function App() {
         <Routes>
           <Route path="" element={<Documents setCurrentRoute={setCurrentRoute}/>}/>
           <Route path="/documents" element={<Documents setCurrentRoute={setCurrentRoute}/>}/>
+          <Route path="/document" element={<Document setCurrentRoute={setCurrentRoute}/>}/>
           <Route path="/document/:id" element={<Document setCurrentRoute={setCurrentRoute}/>}/>
           <Route path="/login" element={<Login setCurrentRoute={setCurrentRoute}/>}/>
           <Route path="/register" element={<Register setCurrentRoute={setCurrentRoute}/>}/>
